@@ -1,10 +1,16 @@
-site_name: Omniverse Intern Tutorials
 theme:
   name: material
   palette:
-    scheme: slate # Forces a sleek dark mode
+    - scheme: slate       # required: this activates the [data-md-color-scheme="slate"] tokens our CSS overrides
+      primary: black
+      accent: light green
+  features:
+    - navigation.instant  # optional but recommended — extra.js hooks document$ to support this
+    - navigation.tracking
+    - navigation.expand
 
-nav:
-  - Welcome & Setup: index.md
-  - 1. Getting Started: test-tutorial.md
-  # Add future files here in the exact order they should be read
+extra_css:
+  - stylesheets/extra.css
+
+extra_javascript:
+  - javascripts/extra.js
