@@ -1,7 +1,4 @@
-​```python
-import time
-import pyautogui
-import subprocess
+site_name: Omniverse Intern Tutorials
 
 theme:
   name: material
