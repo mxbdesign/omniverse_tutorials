@@ -123,6 +123,17 @@ body,
   fill: #0F0F0F;
 }
 
+/* Hide logo fully */
+.md-header__button.md-logo,
+.md-nav__button.md-logo {
+  display: none !important;
+}
+
+/* Hide copyright footer */
+.md-copyright {
+  display: none !important;
+}
+
 /* Search box sitting inside the green header needs a dark well
    so the input remains readable against the green background */
 .md-search__form {

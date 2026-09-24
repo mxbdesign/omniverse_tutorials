@@ -2,7 +2,6 @@ site_name: Omniverse Intern Tutorials
 
 theme:
   name: material
-  logo: assets/logo.svg
   favicon: assets/logo.svg
   icon:
     logo: null          # ensures the default book icon doesn't fight with your custom logo
