@@ -1,0 +1,410 @@
+/* ==========================================================================
+   Omniverse Intern Docs — extra.css
+   Custom theme override for MkDocs Material
+   Deep dark mode + NVIDIA Green accents + "Mission Path" sidebar
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Roboto+Mono:wght@400;500&display=swap');
+
+/* --------------------------------------------------------------------------
+   1. Color tokens
+   Defined at :root so they apply regardless of which palette scheme name
+   is active in mkdocs.yml — previously these were scoped to
+   [data-md-color-scheme="slate"] only, which silently fell back to
+   Material's default indigo header whenever the scheme attribute didn't
+   match exactly. Also re-declared under both scheme attributes as a
+   defensive fallback.
+   -------------------------------------------------------------------------- */
+:root,
+[data-md-color-scheme="slate"],
+[data-md-color-scheme="default"] {
+  --md-default-bg-color: #0F0F0F;
+  --md-default-bg-color--light: #1A1A1A;
+  --md-default-bg-color--lighter: #222222;
+
+  --md-default-fg-color: #E6E6E6;
+  --md-default-fg-color--light: #A0A0A0;   /* muted / unread text */
+  --md-default-fg-color--lighter: #6B6B6B;
+
+  /* Header / tabs bar now NVIDIA green with dark text for contrast */
+  --md-primary-fg-color: #76B900;
+  --md-primary-fg-color--light: #8CCB1A;
+  --md-primary-fg-color--dark: #5C9100;
+  --md-primary-bg-color: #0F0F0F;
+  --md-primary-bg-color--light: #0F0F0F;
+
+  --md-accent-fg-color: #76B900;           /* NVIDIA Green */
+  --md-accent-fg-color--transparent: rgba(118, 185, 0, 0.15);
+
+  --md-typeset-a-color: #76B900;
+
+  --md-code-bg-color: #161616;
+  --md-code-fg-color: #D4D4D4;
+
+  --nv-green: #76B900;
+  --nv-green-dim: #5C9100;
+  --nv-green-glow: rgba(118, 185, 0, 0.35);
+  --nv-bg-base: #0F0F0F;
+  --nv-bg-elevated: #1A1A1A;
+  --nv-bg-hover: #232323;
+  --nv-border: #2A2A2A;
+  --nv-text-muted: #8A8A8A;
+  --nv-text-bright: #FFFFFF;
+}
+
+/* --------------------------------------------------------------------------
+   2. Base layout & typography
+   -------------------------------------------------------------------------- */
+body,
+.md-typeset {
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background-color: var(--nv-bg-base);
+  color: var(--md-default-fg-color);
+  letter-spacing: 0.1px;
+}
+
+.md-typeset code,
+.md-typeset pre {
+  font-family: "Roboto Mono", "SFMono-Regular", Consolas, monospace;
+}
+
+.md-typeset h1,
+.md-typeset h2,
+.md-typeset h3 {
+  font-weight: 700;
+  color: var(--nv-text-bright);
+  letter-spacing: -0.2px;
+}
+
+.md-typeset h1 {
+  border-bottom: 2px solid var(--nv-green);
+  padding-bottom: 0.4rem;
+  margin-bottom: 0.6rem;   /* was Material's default ~1.25rem */
+}
+
+/* Tighten the gap between a top-level H1 and whatever immediately
+   follows it (a lone-line "subtitle" paragraph or an H2), which by
+   default inherits Material's full heading top-margin */
+.md-typeset h1 + p,
+.md-typeset h1 + h2 {
+  margin-top: 0.4rem;
+}
+
+.md-typeset h2 {
+  margin-top: 1.4rem;   /* was ~2rem — still clear separation, less dead space */
+  margin-bottom: 0.6rem;
+}
+
+.md-typeset a {
+  color: var(--nv-green);
+  transition: color 0.15s ease, opacity 0.15s ease;
+}
+
+.md-typeset a:hover {
+  color: var(--nv-green);
+  opacity: 0.8;
+}
+
+/* Header / top nav bar — NVIDIA green, dark text/icons for contrast */
+.md-header {
+  background-color: var(--nv-green);
+  color: #0F0F0F;
+  box-shadow: none;
+}
+
+.md-header__title,
+.md-header__button,
+.md-header__topic {
+  color: #0F0F0F;
+}
+
+.md-header__button svg,
+.md-header__button.md-icon svg {
+  fill: #0F0F0F;
+}
+
+/* Search box sitting inside the green header needs a dark well
+   so the input remains readable against the green background */
+.md-search__form {
+  background-color: rgba(15, 15, 15, 0.16);
+}
+
+.md-search__form:hover {
+  background-color: rgba(15, 15, 15, 0.28);
+}
+
+.md-search__input {
+  color: #0F0F0F;
+}
+
+.md-search__input::placeholder {
+  color: rgba(15, 15, 15, 0.7);
+}
+
+.md-search__icon svg {
+  fill: #0F0F0F;
+}
+
+/* Tabs bar (if navigation.tabs is enabled) stays dark to separate
+   from the green header and match the sidebar */
+.md-tabs {
+  background-color: var(--nv-bg-elevated);
+  border-bottom: 1px solid var(--nv-border);
+}
+
+.md-tabs__link {
+  color: var(--nv-text-muted);
+}
+
+.md-tabs__link--active,
+.md-tabs__link:hover {
+  color: var(--nv-text-bright);
+}
+
+/* --------------------------------------------------------------------------
+   3. Buttons / calls-to-action
+   -------------------------------------------------------------------------- */
+.md-typeset .md-button {
+  background-color: transparent;
+  color: var(--nv-green);
+  border: 1.5px solid var(--nv-green);
+  border-radius: 4px;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.md-typeset .md-button:hover {
+  background-color: var(--nv-green);
+  color: #0F0F0F;
+  box-shadow: 0 0 16px var(--nv-green-glow);
+}
+
+.md-typeset .md-button--primary {
+  background-color: var(--nv-green);
+  color: #0F0F0F;
+  border-color: var(--nv-green);
+}
+
+.md-typeset .md-button--primary:hover {
+  background-color: var(--nv-green-dim);
+  border-color: var(--nv-green-dim);
+  box-shadow: 0 0 16px var(--nv-green-glow);
+}
+
+/* --------------------------------------------------------------------------
+   4. "Mission Progression" Sidebar Overhaul
+   -------------------------------------------------------------------------- */
+.md-sidebar--primary .md-sidebar__scrollwrap {
+  background-color: var(--nv-bg-base);
+}
+
+.md-nav--primary .md-nav__title {
+  display: none; /* hide default "Docs" label; replaced by section styling below */
+}
+
+/* Top-level sections read as "Missions" */
+.md-nav__item--section > .md-nav__link,
+.md-nav--primary > .md-nav__list > .md-nav__item > .md-nav__link {
+  font-weight: 700;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  color: var(--nv-green);
+  padding: 0.6rem 0.75rem 0.3rem;
+  opacity: 0.9;
+}
+
+/* The vertical "path" line connecting steps */
+.md-nav__list {
+  position: relative;
+  border-left: 2px solid var(--nv-border);
+  margin-left: 0.9rem;
+  padding-left: 0;
+}
+
+.md-nav__item {
+  position: relative;
+  padding-left: 0.5rem;
+}
+
+/* Node marker on the path for each tutorial step */
+.md-nav__item .md-nav__link {
+  position: relative;
+  display: block;
+  padding: 0.45rem 0.75rem 0.45rem 1.4rem;
+  margin: 2px 0;
+  border-radius: 0 6px 6px 0;
+  color: var(--nv-text-muted);        /* unread = muted */
+  font-size: 0.8rem;
+  font-weight: 500;
+  transition: all 0.18s ease;
+}
+
+.md-nav__item .md-nav__link::before {
+  content: "";
+  position: absolute;
+  left: -7px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: var(--nv-bg-elevated);
+  border: 2px solid var(--nv-border);
+  transition: all 0.18s ease;
+  z-index: 2;
+}
+
+/* Hover state -> bright + green glow node */
+.md-nav__item .md-nav__link:hover {
+  color: var(--nv-text-bright);
+  background-color: var(--nv-bg-hover);
+}
+
+.md-nav__item .md-nav__link:hover::before {
+  border-color: var(--nv-green);
+  box-shadow: 0 0 6px var(--nv-green-glow);
+}
+
+/* Active / current step -> bright white text, green node, highlighted rail */
+.md-nav__link--active,
+.md-nav__item .md-nav__link.md-nav__link--active {
+  color: var(--nv-text-bright) !important;
+  font-weight: 700;
+  background-color: var(--nv-bg-elevated);
+  border-left: 2px solid var(--nv-green);
+  margin-left: -2px;
+}
+
+.md-nav__link--active::before {
+  background-color: var(--nv-green) !important;
+  border-color: var(--nv-green) !important;
+  box-shadow: 0 0 10px var(--nv-green-glow);
+}
+
+/* --------------------------------------------------------------------------
+   5. Completed step feedback (driven by extra.js)
+   -------------------------------------------------------------------------- */
+.md-nav__item .md-nav__link.completed-step {
+  color: var(--nv-text-muted);
+  opacity: 0.75;
+}
+
+.md-nav__item .md-nav__link.completed-step::before {
+  background-color: var(--nv-green);
+  border-color: var(--nv-green);
+  opacity: 0.85;
+}
+
+/* Green checkmark appended after the link text */
+.md-nav__item .md-nav__link.completed-step::after {
+  content: "\2713";  /* ✓ */
+  display: inline-block;
+  margin-left: 6px;
+  color: var(--nv-green);
+  font-weight: 700;
+  font-size: 0.75rem;
+  vertical-align: middle;
+}
+
+/* If a step is both completed AND currently active, keep it bright
+   but still show the checkmark */
+.md-nav__link--active.completed-step {
+  color: var(--nv-text-bright) !important;
+  opacity: 1;
+}
+
+/* --------------------------------------------------------------------------
+   6. Progress bar (optional companion element, e.g. injected by JS)
+   -------------------------------------------------------------------------- */
+.omniverse-progress-track {
+  width: 100%;
+  height: 6px;
+  background-color: var(--nv-bg-elevated);
+  border-radius: 3px;
+  overflow: hidden;
+  margin: 0.5rem 0 1rem;
+  border: 1px solid var(--nv-border);
+}
+
+.omniverse-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--nv-green-dim), var(--nv-green));
+  box-shadow: 0 0 8px var(--nv-green-glow);
+  transition: width 0.4s ease;
+}
+
+.omniverse-progress-label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--nv-text-muted);
+  margin-bottom: 0.25rem;
+}
+
+/* --------------------------------------------------------------------------
+   7. Code blocks & admonitions — technical polish
+   -------------------------------------------------------------------------- */
+.md-typeset pre > code {
+  background-color: var(--nv-bg-elevated) !important;
+  border: 1px solid var(--nv-border);
+  border-radius: 6px;
+}
+
+.md-typeset .admonition {
+  border-radius: 6px;
+  border: 1px solid var(--nv-border);
+  background-color: var(--nv-bg-elevated);
+}
+
+.md-typeset .admonition.note,
+.md-typeset .admonition.tip {
+  border-left: 4px solid var(--nv-green);
+}
+
+/* --------------------------------------------------------------------------
+   7b. Copy-to-clipboard button (rendered automatically by Material when
+   `content.code.copy` is enabled in mkdocs.yml — see setup notes).
+   Restyled to match the green/dark theme instead of default grey.
+   -------------------------------------------------------------------------- */
+.md-clipboard {
+  color: var(--nv-text-muted);
+  transition: color 0.15s ease, transform 0.15s ease;
+}
+
+.md-clipboard:hover {
+  color: var(--nv-green);
+  transform: scale(1.1);
+}
+
+.md-clipboard.md-clipboard--inline:focus-visible,
+.md-clipboard:focus-visible {
+  outline: 2px solid var(--nv-green);
+  outline-offset: 2px;
+}
+
+/* Brief "Copied!" tooltip Material shows on click */
+.md-tooltip {
+  background-color: var(--nv-bg-elevated);
+  color: var(--nv-text-bright);
+  border: 1px solid var(--nv-green);
+}
+
+/* Scrollbar polish for the dark theme */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--nv-bg-base);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--nv-border);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--nv-green-dim);
+}
