@@ -7,10 +7,17 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Roboto+Mono:wght@400;500&display=swap');
 
 /* --------------------------------------------------------------------------
-   1. Color tokens (Material's [data-md-color-scheme] hook)
-   Set `scheme: slate` in mkdocs.yml palette config, then override tokens here
+   1. Color tokens
+   Defined at :root so they apply regardless of which palette scheme name
+   is active in mkdocs.yml — previously these were scoped to
+   [data-md-color-scheme="slate"] only, which silently fell back to
+   Material's default indigo header whenever the scheme attribute didn't
+   match exactly. Also re-declared under both scheme attributes as a
+   defensive fallback.
    -------------------------------------------------------------------------- */
-[data-md-color-scheme="slate"] {
+:root,
+[data-md-color-scheme="slate"],
+[data-md-color-scheme="default"] {
   --md-default-bg-color: #0F0F0F;
   --md-default-bg-color--light: #1A1A1A;
   --md-default-bg-color--lighter: #222222;
@@ -19,8 +26,12 @@
   --md-default-fg-color--light: #A0A0A0;   /* muted / unread text */
   --md-default-fg-color--lighter: #6B6B6B;
 
-  --md-primary-fg-color: #1A1A1A;
-  --md-primary-bg-color: #FFFFFF;
+  /* Header / tabs bar now NVIDIA green with dark text for contrast */
+  --md-primary-fg-color: #76B900;
+  --md-primary-fg-color--light: #8CCB1A;
+  --md-primary-fg-color--dark: #5C9100;
+  --md-primary-bg-color: #0F0F0F;
+  --md-primary-bg-color--light: #0F0F0F;
 
   --md-accent-fg-color: #76B900;           /* NVIDIA Green */
   --md-accent-fg-color--transparent: rgba(118, 185, 0, 0.15);
@@ -68,6 +79,20 @@ body,
 .md-typeset h1 {
   border-bottom: 2px solid var(--nv-green);
   padding-bottom: 0.4rem;
+  margin-bottom: 0.6rem;   /* was Material's default ~1.25rem */
+}
+
+/* Tighten the gap between a top-level H1 and whatever immediately
+   follows it (a lone-line "subtitle" paragraph or an H2), which by
+   default inherits Material's full heading top-margin */
+.md-typeset h1 + p,
+.md-typeset h1 + h2 {
+  margin-top: 0.4rem;
+}
+
+.md-typeset h2 {
+  margin-top: 1.4rem;   /* was ~2rem — still clear separation, less dead space */
+  margin-bottom: 0.6rem;
 }
 
 .md-typeset a {
@@ -80,16 +105,60 @@ body,
   opacity: 0.8;
 }
 
-/* Header / top nav bar */
+/* Header / top nav bar — NVIDIA green, dark text/icons for contrast */
 .md-header {
-  background-color: var(--nv-bg-base);
-  border-bottom: 1px solid var(--nv-border);
+  background-color: var(--nv-green);
+  color: #0F0F0F;
   box-shadow: none;
 }
 
+.md-header__title,
+.md-header__button,
+.md-header__topic {
+  color: #0F0F0F;
+}
+
+.md-header__button svg,
+.md-header__button.md-icon svg {
+  fill: #0F0F0F;
+}
+
+/* Search box sitting inside the green header needs a dark well
+   so the input remains readable against the green background */
+.md-search__form {
+  background-color: rgba(15, 15, 15, 0.16);
+}
+
+.md-search__form:hover {
+  background-color: rgba(15, 15, 15, 0.28);
+}
+
+.md-search__input {
+  color: #0F0F0F;
+}
+
+.md-search__input::placeholder {
+  color: rgba(15, 15, 15, 0.7);
+}
+
+.md-search__icon svg {
+  fill: #0F0F0F;
+}
+
+/* Tabs bar (if navigation.tabs is enabled) stays dark to separate
+   from the green header and match the sidebar */
 .md-tabs {
   background-color: var(--nv-bg-elevated);
   border-bottom: 1px solid var(--nv-border);
+}
+
+.md-tabs__link {
+  color: var(--nv-text-muted);
+}
+
+.md-tabs__link--active,
+.md-tabs__link:hover {
+  color: var(--nv-text-bright);
 }
 
 /* --------------------------------------------------------------------------
@@ -291,6 +360,34 @@ body,
 .md-typeset .admonition.note,
 .md-typeset .admonition.tip {
   border-left: 4px solid var(--nv-green);
+}
+
+/* --------------------------------------------------------------------------
+   7b. Copy-to-clipboard button (rendered automatically by Material when
+   `content.code.copy` is enabled in mkdocs.yml — see setup notes).
+   Restyled to match the green/dark theme instead of default grey.
+   -------------------------------------------------------------------------- */
+.md-clipboard {
+  color: var(--nv-text-muted);
+  transition: color 0.15s ease, transform 0.15s ease;
+}
+
+.md-clipboard:hover {
+  color: var(--nv-green);
+  transform: scale(1.1);
+}
+
+.md-clipboard.md-clipboard--inline:focus-visible,
+.md-clipboard:focus-visible {
+  outline: 2px solid var(--nv-green);
+  outline-offset: 2px;
+}
+
+/* Brief "Copied!" tooltip Material shows on click */
+.md-tooltip {
+  background-color: var(--nv-bg-elevated);
+  color: var(--nv-text-bright);
+  border: 1px solid var(--nv-green);
 }
 
 /* Scrollbar polish for the dark theme */
