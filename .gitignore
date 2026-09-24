@@ -1,4 +1,2 @@
-*.mp4
-*.mkv
-*.mov
-.cache/
+venv/
+site/
