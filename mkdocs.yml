@@ -1,1 +1,10 @@
-site_name: My Docs
+site_name: Omniverse Intern Tutorials
+theme:
+  name: material
+  palette:
+    scheme: slate # Forces a sleek dark mode
+
+nav:
+  - Welcome & Setup: index.md
+  - 1. Getting Started: test-tutorial.md
+  # Add future files here in the exact order they should be read
