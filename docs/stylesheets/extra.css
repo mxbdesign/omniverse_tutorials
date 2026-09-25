@@ -107,20 +107,20 @@ body,
 
 /* Header / top nav bar — NVIDIA green, dark text/icons for contrast */
 .md-header {
-  background-color: var(--nv-green);
-  color: #0F0F0F;
+  background-color: var(--nv-green) !important;
+  color: #0F0F0F !important;
   box-shadow: none;
 }
 
 .md-header__title,
 .md-header__button,
 .md-header__topic {
-  color: #0F0F0F;
+  color: #0F0F0F !important;
 }
 
 .md-header__button svg,
 .md-header__button.md-icon svg {
-  fill: #0F0F0F;
+  fill: #0F0F0F !important;
 }
 
 /* Hide logo fully */
